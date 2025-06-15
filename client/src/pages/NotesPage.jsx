@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useAuth } from '../context/authContext';
+import { useAuth } from '../context/AuthContext';
 
 const NotesPage = () => {
   const { auth } = useAuth();
@@ -9,7 +9,7 @@ const NotesPage = () => {
   const [content, setContent] = useState('');
 
   const fetchNotes = async () => {
-    const res = await axios.get("http://localhost:8000/api/v1/notes/user-notes", {
+    const res = await axios.get("https://mern-notes-backend-git-main-madgula-vamshis-projects.vercel.app/api/v1/notes/user-notes", {
       headers: { Authorization: auth.token },
     });
     setNotes(res.data.notes);
@@ -17,7 +17,7 @@ const NotesPage = () => {
 
   const handleCreate = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:8000/api/v1/notes/create", { title, content }, {
+    await axios.post("https://mern-notes-backend-git-main-madgula-vamshis-projects.vercel.app/api/v1/notes/create", { title, content }, {
       headers: { Authorization: auth.token },
     });
     setTitle('');
@@ -26,7 +26,7 @@ const NotesPage = () => {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:8000/api/v1/notes/${id}`, {
+    await axios.delete(`https://mern-notes-backend-git-main-madgula-vamshis-projects.vercel.app/api/v1/notes/${id}`, {
       headers: { Authorization: auth.token },
     });
     fetchNotes();

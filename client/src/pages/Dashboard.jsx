@@ -10,7 +10,7 @@ const Dashboard = () => {
 
   const fetchNotes = async () => {
     const { data } = await axios.get(
-      "http://localhost:8000/api/v1/notes/user-notes",
+      "https://mern-notes-backend-git-main-madgula-vamshis-projects.vercel.app/api/v1/notes/user-notes",
       {
         headers: { Authorization: auth.token },
       }
@@ -21,7 +21,7 @@ const Dashboard = () => {
   const handleCreate = async (e) => {
     e.preventDefault();
     await axios.post(
-      "http://localhost:8000/api/v1/notes/create",
+      "https://mern-notes-backend-git-main-madgula-vamshis-projects.vercel.app/api/v1/notes/create",
       { title, content },
       {
         headers: { Authorization: auth.token },
@@ -33,7 +33,7 @@ const Dashboard = () => {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:8000/api/v1/notes/${id}`, {
+    await axios.delete(`https://mern-notes-backend-git-main-madgula-vamshis-projects.vercel.app/api/v1/notes/${id}`, {
       headers: { Authorization: auth.token },
     });
     fetchNotes();

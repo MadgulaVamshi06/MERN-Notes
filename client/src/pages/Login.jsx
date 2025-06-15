@@ -12,7 +12,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { data } = await axios.post(
-      "http://localhost:8000/api/v1/auth/login",
+      "https://mern-notes-backend-git-main-madgula-vamshis-projects.vercel.app/api/v1/auth/login",
       { email, password }
     );
     if (data.success) {
