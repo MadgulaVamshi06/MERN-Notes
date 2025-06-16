@@ -27,7 +27,7 @@ const NotesPage = () => {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`https://mern-notes-backend-git-main-madgula-vamshis-projects.vercel.app/api/v1/notes/${id}`, {
+    await axios.delete(`https://mern-notes-backend-sooty.vercel.app/api/v1/notes/${id}`, {
       headers: { Authorization: auth.token },
     });
     fetchNotes();

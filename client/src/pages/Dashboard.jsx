@@ -12,7 +12,7 @@ const Dashboard = () => {
 
   const fetchNotes = async () => {
     const { data } = await axios.get(
-      "https://mern-notes-backend-git-main-madgula-vamshis-projects.vercel.app/api/v1/notes/user-notes",
+      "https://mern-notes-backend-sooty.vercel.app/api/v1/notes/user-notes",
       { headers: { Authorization: auth.token } }
     );
     if (data.success) setNotes(data.notes);
@@ -21,7 +21,7 @@ const Dashboard = () => {
   const handleCreate = async (e) => {
     e.preventDefault();
     await axios.post(
-      "https://mern-notes-backend-git-main-madgula-vamshis-projects.vercel.app/api/v1/notes/create",
+      "https://mern-notes-backend-sooty.vercel.app/api/v1/notes/create",
       { title, content },
       { headers: { Authorization: auth.token } }
     );
@@ -32,7 +32,7 @@ const Dashboard = () => {
 
   const handleDelete = async (id) => {
     await axios.delete(
-      `https://mern-notes-backend-git-main-madgula-vamshis-projects.vercel.app/api/v1/notes/${id}`,
+      `https://mern-notes-backend-sooty.vercel.app/api/v1/notes/${id}`,
       { headers: { Authorization: auth.token } }
     );
     fetchNotes();
@@ -41,7 +41,7 @@ const Dashboard = () => {
   const handleLogout = () => {
     setAuth({ user: null, token: "" });
     localStorage.removeItem("auth");
-    navigate("/login");
+    navigate("/home");
   };
 
   useEffect(() => {
