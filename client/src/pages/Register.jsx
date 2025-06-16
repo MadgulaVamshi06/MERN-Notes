@@ -14,7 +14,10 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { data } = await axios.post('https://mern-notes-backend-git-main-madgula-vamshis-projects.vercel.app/api/v1/auth/register', formData);
+    const { data } = await axios.post(
+      'https://mern-notes-backend-git-main-madgula-vamshis-projects.vercel.app/api/v1/auth/register',
+      formData
+    );
     if (data.success) {
       alert('Registration Successful');
       navigate('/login');
@@ -24,7 +27,8 @@ const Register = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-10 space-y-4">
+    <form onSubmit={handleSubmit} className="form-container">
+      <h2>Register</h2>
       {['name', 'email', 'password', 'phone', 'answer', 'address'].map((field) => (
         <input
           key={field}
@@ -32,11 +36,10 @@ const Register = () => {
           placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
           value={formData[field]}
           onChange={handleChange}
-          className="border p-2 w-full"
           required
         />
       ))}
-      <button type="submit" className="bg-green-600 text-white px-4 py-2">Register</button>
+      <button type="submit" className="btn-green">Register</button>
     </form>
   );
 };

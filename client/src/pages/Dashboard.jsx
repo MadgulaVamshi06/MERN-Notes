@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const { auth } = useAuth();
+  const { auth, setAuth } = useAuth();
+  const navigate = useNavigate();
   const [notes, setNotes] = useState([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -11,9 +13,7 @@ const Dashboard = () => {
   const fetchNotes = async () => {
     const { data } = await axios.get(
       "https://mern-notes-backend-git-main-madgula-vamshis-projects.vercel.app/api/v1/notes/user-notes",
-      {
-        headers: { Authorization: auth.token },
-      }
+      { headers: { Authorization: auth.token } }
     );
     if (data.success) setNotes(data.notes);
   };
@@ -23,9 +23,7 @@ const Dashboard = () => {
     await axios.post(
       "https://mern-notes-backend-git-main-madgula-vamshis-projects.vercel.app/api/v1/notes/create",
       { title, content },
-      {
-        headers: { Authorization: auth.token },
-      }
+      { headers: { Authorization: auth.token } }
     );
     setTitle("");
     setContent("");
@@ -33,10 +31,17 @@ const Dashboard = () => {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`https://mern-notes-backend-git-main-madgula-vamshis-projects.vercel.app/api/v1/notes/${id}`, {
-      headers: { Authorization: auth.token },
-    });
+    await axios.delete(
+      `https://mern-notes-backend-git-main-madgula-vamshis-projects.vercel.app/api/v1/notes/${id}`,
+      { headers: { Authorization: auth.token } }
+    );
     fetchNotes();
+  };
+
+  const handleLogout = () => {
+    setAuth({ user: null, token: "" });
+    localStorage.removeItem("auth");
+    navigate("/login");
   };
 
   useEffect(() => {
@@ -44,38 +49,43 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="max-w-2xl mx-auto mt-10">
-      <h2 className="text-xl font-bold mb-4">Create Note</h2>
-      <form onSubmit={handleCreate} className="space-y-4 mb-6">
+    <div className="dashboard-container">
+      <div className="dashboard-header">
+        <h1>Dashboard</h1>
+        <button onClick={handleLogout} className="btn-logout">Logout</button>
+      </div>
+
+      <h2>Create Note</h2>
+      <form onSubmit={handleCreate} className="note-form">
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Title"
-          className="border p-2 w-full"
           required
         />
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="Content"
-          className="border p-2 w-full"
         />
-        <button className="bg-purple-600 text-white px-4 py-2">Add Note</button>
+        <button type="submit" className="btn-purple">Add Note</button>
       </form>
 
-      <h2 className="text-xl font-bold mb-4">Your Notes</h2>
-      {notes.map((note) => (
-        <div key={note._id} className="border p-4 mb-3 rounded">
-          <h3 className="font-bold">{note.title}</h3>
-          <p>{note.content}</p>
-          <button
-            onClick={() => handleDelete(note._id)}
-            className="text-red-600 mt-2"
-          >
-            Delete
-          </button>
-        </div>
-      ))}
+      <h2>Your Notes</h2>
+      <div className="notes-list">
+        {notes.map((note) => (
+          <div key={note._id} className="note-card">
+            <h3>{note.title}</h3>
+            <p>{note.content}</p>
+            <button
+              onClick={() => handleDelete(note._id)}
+              className="btn-red"
+            >
+              Delete
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

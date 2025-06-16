@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import "./NotesPage.css";
 
 const NotesPage = () => {
   const { auth } = useAuth();
@@ -35,21 +36,24 @@ const NotesPage = () => {
   useEffect(() => { fetchNotes(); }, []);
 
   return (
-    <div>
-      <form onSubmit={handleCreate}>
+    <div className="notes-container">
+      <form onSubmit={handleCreate} className="note-form">
+        <h2>Create Note</h2>
         <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder='Title' required />
         <textarea value={content} onChange={(e) => setContent(e.target.value)} placeholder='Content' />
-        <button type='submit'>Create</button>
+        <button type='submit' className="btn-blue">Add Note</button>
       </form>
-      <ul>
+
+      <div className="notes-list">
+        <h2>Your Notes</h2>
         {notes.map(note => (
-          <li key={note._id}>
+          <div key={note._id} className="note-card">
             <h3>{note.title}</h3>
             <p>{note.content}</p>
-            <button onClick={() => handleDelete(note._id)}>Delete</button>
-          </li>
+            <button onClick={() => handleDelete(note._id)} className="btn-red">Delete</button>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

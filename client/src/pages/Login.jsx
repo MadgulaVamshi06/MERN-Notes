@@ -17,10 +17,7 @@ const Login = () => {
     );
     if (data.success) {
       setAuth({ user: data.user, token: data.token });
-      localStorage.setItem(
-        "auth",
-        JSON.stringify({ user: data.user, token: data.token })
-      );
+      localStorage.setItem("auth", JSON.stringify({ user: data.user, token: data.token }));
       navigate("/dashboard");
     } else {
       alert(data.message);
@@ -28,13 +25,13 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-10 space-y-4">
+    <form onSubmit={handleSubmit} className="form-container">
+      <h2>Login</h2>
       <input
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="border p-2 w-full"
         required
       />
       <input
@@ -42,12 +39,9 @@ const Login = () => {
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        className="border p-2 w-full"
         required
       />
-      <button type="submit" className="bg-blue-600 text-white px-4 py-2">
-        Login
-      </button>
+      <button type="submit" className="btn-blue">Login</button>
     </form>
   );
 };
